@@ -19,6 +19,15 @@ function draw() {
   aircraft.update();
   aircraft.display();
 
+  // 파티클 시스템 간의 밀고 당기는 힘 적용
+  for (let i = 0; i < particleSystems.length; i++) {
+    for (let j = i + 1; j < particleSystems.length; j++) {
+      // 각 파티클 시스템끼리 밀고 당기는 힘 적용
+      particleSystems[i].applySystemInteraction(particleSystems[j]);
+    }
+  }
+
+  // 각 파티클 시스템의 힘 적용 및 업데이트
   for (let ps of particleSystems) {
     ps.applyForce(aircraft.generateForce(ps.origin)); // 비행기 힘 적용
     ps.update();
